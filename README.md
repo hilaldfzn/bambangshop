@@ -58,12 +58,12 @@ You can install Postman via this website: https://www.postman.com/downloads/
     -   [x] Commit: `Implement delete function in Subscriber repository.`
     -   [x] Write answers of your learning module's "Reflection Publisher-1" questions in this README.
 -   **STAGE 2: Implement services and controllers**
-    -   [ ] Commit: `Create Notification service struct skeleton.`
-    -   [ ] Commit: `Implement subscribe function in Notification service.`
-    -   [ ] Commit: `Implement subscribe function in Notification controller.`
-    -   [ ] Commit: `Implement unsubscribe function in Notification service.`
-    -   [ ] Commit: `Implement unsubscribe function in Notification controller.`
-    -   [ ] Write answers of your learning module's "Reflection Publisher-2" questions in this README.
+    -   [x] Commit: `Create Notification service struct skeleton.`
+    -   [x] Commit: `Implement subscribe function in Notification service.`
+    -   [x] Commit: `Implement subscribe function in Notification controller.`
+    -   [x] Commit: `Implement unsubscribe function in Notification service.`
+    -   [x] Commit: `Implement unsubscribe function in Notification controller.`
+    -   [x] Write answers of your learning module's "Reflection Publisher-2" questions in this README.
 -   **STAGE 3: Implement notification mechanism**
     -   [ ] Commit: `Implement update method in Subscriber model to send notification HTTP requests.`
     -   [ ] Commit: `Implement notify function in Notification service to notify each Subscriber.`
@@ -88,5 +88,14 @@ When programming using Rust, we are enforced by rigorous compiler constraints to
 - Dalam kasus BambangShop yang akan memanfaatkan *multithreading*, pemilihan struktur data yang *thread-safe* penting untuk menghindari kondisi *race condition* saat data diakses atau dimodifikasi oleh banyak *thread* secara bersamaan. Menurut pemahaman saya, **DashMap** menjadi pilihan yang cocok untuk kebutuhan dalam kasus ini karena merupakan versi *thread-safe* dari **HashMap** yang mendukung operasi concurrent pada pasangan key-value. **DashMap** memungkinkan akses dan modifikasi data secara simultan oleh berbagai *thread* tanpa mengorbankan keamanan data. Selain itu, penerapan Singleton pattern melalui `lazy_static` berguna untuk memastikan bahwa hanya terdapat satu *instance* dari objek yang digunakan untuk menyimpan daftar **Subscriber**. Hal ini untuk memastikan bahwa semua akses dan perubahan pada daftar **Subscriber** dilakukan pada satu sumber data yang sama. Penggunaan Singleton pattern bersama dengan DashMap dapat menjadi solusi yang efisien untuk memastikan bahwa kita dapat mengelola data **Subscriber** dengan aman dalam lingkungan *multithreaded*.
 
 #### Reflection Publisher-2
+
+In the Model-View Controller (MVC) compound pattern, there is no “Service” and “Repository”. Model in MVC covers both data storage and business logic. Explain based on your understanding of design principles, why we need to separate “Service” and “Repository” from a Model?
+- Prinsip *Separation of Concerns* dalam desain sistem *software* menekankan pentingnya untuk memisahkan tiap bagian sistem berdasarkan fokus fungsinya, sehingga memungkinkan perubahan spesifik hanya pada bagian yang terkait. Dalam konteks ini, *Repository* bertanggung jawab atas penyimpanan dan pengambilan data, sementara *Service* mengelola logika bisnis. Pemisahan antara *Service* dan *Repository* mengikuti prinsip Single Responsibility Principle (SRP), di mana *Service* mengolah data yang diperoleh dari *Repository*, dan *Repository* berfungsi sebagai *layer* akses ke database untuk operasi seperti update dan delete. Pemisahan kedua *layer* ini tidak hanya memfasilitasi pengembangan tetapi juga meningkatkan kemudahan dalam pemeliharaan kode.
+
+What happens if we only use the Model? Explain your imagination on how the interactions between each model **(Program, Subscriber, Notification)** affect the code complexity for each model?
+- Jika kita hanya mengandalkan model untuk menangani penyimpanan data dan logika bisnis, maka dapat menyebabkan *tightly coupled*, di mana model harus saling mengetahui dan bergantung satu sama lain. Hal ini berarti bahwa perubahan pada satu model dapat memicu kebutuhan akan perubahan pada model lain sehingga membuat kode menjadi sulit untuk di*maintain*. Jika hanya menggunakan *layer* model tanpa adanya pemisahan tugas ke *layer* lain, maka akan menghasilkan program yang kurang fleksibel, di mana perubahan kecil dapat memerlukan revisi luas terhadap kode, meningkatkan kompleksitas, dan mengurangi kemudahan pemeliharaan.
+
+Have you explored more about **Postman**? Tell us how this tool helps you to test your current work. Maybe you want to also list which features in Postman you are interested in or feel like it’s helpful to help your Group Project or any of your future software engineering projects.
+- **Postman** adalah alat yang digunakan untuk pengujian API yang memungkinkan pengguna untuk melakukan berbagai jenis HTTP request seperti GET, POST, DELETE, dan lainnya dengan mudah. Fitur yang cukup menarik bagi saya adalah kemampuan untuk menyesuaikan jenis request dan berbagi *collection of requests* hanya dengan *copy-paste text*. Ini sangat membantu dalam menguji aplikasi yang kita buat untuk memastikan bahwa aplikasi memberikan response yang diharapkan terhadap request yang dibuat. Dengan **Postman**, pengguna dapat mengeksplorasi dan memverifikasi fungsi CRUD aplikasi untuk memeriksa apakah data yang di-*retrieve* akurat.
 
 #### Reflection Publisher-3
