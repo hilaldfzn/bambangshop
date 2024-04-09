@@ -65,11 +65,11 @@ You can install Postman via this website: https://www.postman.com/downloads/
     -   [x] Commit: `Implement unsubscribe function in Notification controller.`
     -   [x] Write answers of your learning module's "Reflection Publisher-2" questions in this README.
 -   **STAGE 3: Implement notification mechanism**
-    -   [ ] Commit: `Implement update method in Subscriber model to send notification HTTP requests.`
-    -   [ ] Commit: `Implement notify function in Notification service to notify each Subscriber.`
-    -   [ ] Commit: `Implement publish function in Program service and Program controller.`
-    -   [ ] Commit: `Edit Product service methods to call notify after create/delete.`
-    -   [ ] Write answers of your learning module's "Reflection Publisher-3" questions in this README.
+    -   [x] Commit: `Implement update method in Subscriber model to send notification HTTP requests.`
+    -   [x] Commit: `Implement notify function in Notification service to notify each Subscriber.`
+    -   [x] Commit: `Implement publish function in Program service and Program controller.`
+    -   [x] Commit: `Edit Product service methods to call notify after create/delete.`
+    -   [x] Write answers of your learning module's "Reflection Publisher-3" questions in this README.
 
 ## Your Reflections
 This is the place for you to write reflections:
@@ -99,3 +99,12 @@ Have you explored more about **Postman**? Tell us how this tool helps you to tes
 - **Postman** adalah alat yang digunakan untuk pengujian API yang memungkinkan pengguna untuk melakukan berbagai jenis HTTP request seperti GET, POST, DELETE, dan lainnya dengan mudah. Fitur yang cukup menarik bagi saya adalah kemampuan untuk menyesuaikan jenis request dan berbagi *collection of requests* hanya dengan *copy-paste text*. Ini sangat membantu dalam menguji aplikasi yang kita buat untuk memastikan bahwa aplikasi memberikan response yang diharapkan terhadap request yang dibuat. Dengan **Postman**, pengguna dapat mengeksplorasi dan memverifikasi fungsi CRUD aplikasi untuk memeriksa apakah data yang di-*retrieve* akurat.
 
 #### Reflection Publisher-3
+
+Observer Pattern has two variations: **Push model** (publisher pushes data to subscribers) and **Pull model** (subscribers pull data from publisher). In this tutorial case, which variation of Observer Pattern that we use?
+- Pada kasus tutorial ini, kita menerapkan **Push Model** dalam sistem notifikasi. Hal ini terlihat pada mekanisme yang digunakan di mana setiap kali ada create, delete, atau publish Product baru, `NotificationService` secara otomatis akan mengirimkan notifikasi update kepada semua **Subscriber** yang telah berlangganan `product_type` tersebut. Proses ini diilustrasikan melalui `NotificationService` yang memanggil method yang berfungsi untuk menelusuri daftar **Subscriber** dan mengirimkan notifikasi update kepada mereka segera setelah perubahan pada Product terjadi. Hal ini menjamin bahwa **Subscriber** selalu mendapatkan informasi terkini tanpa perlu meminta atau memeriksa notifikasi update secara manual.
+
+What are the advantages and disadvantages of using the other variation of Observer Pattern for this tutorial case? (example: if you answer Q1 with Push, then imagine if we used Pull)
+- **Pull Model** memberikan keleluasaan bagi **Subsciber** dalam mengakses informasi tanpa perlu membuka data mereka kepada **Publisher**. Namun, terdapat kerugian jika menggunakan model ini, karena memerlukan *resource* yang besar karena **Subsciber** perlu terus-menerus memeriksa update dari **Publisher** yang dapat meningkatkan *network traffic* dan *latency*. Dalam pendekatan **Pull Model**, keuntungannya adalah **Subsciber** memiliki kendali penuh untuk memilih dan mengambil informasi yang mereka anggap relevan kapan pun mereka membutuhkannya sehingga memberikan fleksibilitas dalam pemilihan data. Namun, hal ini juga mengharuskan **Subsciber** untuk memahami secara mendalam tentang struktur data yang mereka pantau agar bisa mengambil keputusan yang tepat terkait data yang ingin diambil serta waktu pengambilannya.
+
+Explain what will happen to the program if we decide to not use multi-threading in the notification process.
+- Tanpa penggunaan *multi-threading*, pengiriman notifikasi akan terjadi secara satu per satu dan sinkronus sehingga mengakibatkan proses yang lambat dan berpotensi menurunkan kualitas *user experience*. Dalam skenario ini, ketika `NotificationService` perlu memberi tahu setiap **Subscriber**, sistem akan mengalami penundaan signifikan karena harus menunggu pengiriman notifikasi selesai satu per satu sebelum beralih ke **Subscriber** berikutnya. Ini bisa mengakibatkan *bottleneck* dalam sistem, terutama jika jumlah **Subscriber** yang sangat besar, maka akan menghambat pengiriman notifikasi.
